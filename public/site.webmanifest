@@ -1,0 +1,15 @@
+{
+  "name": "DYSTOPIA — Drum & Bass Event",
+  "short_name": "DYSTOPIA",
+  "description": "DYSTOPIA — Drum & Bass Event am 19.09.2026 im Stadtsaal Wil.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07080a",
+  "theme_color": "#cd4903",
+  "lang": "de-CH",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

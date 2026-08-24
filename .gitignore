@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Rohmaterial (Fotos/Videos/Flyer vom Grafiker) — liegt lokal, nicht im Repo
+/material/
