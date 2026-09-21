@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Rohmaterial (Fotos/Videos/Flyer vom Grafiker) — liegt lokal, nicht im Repo
 /material/
+
+# Claude-Code-Arbeitsdaten (Worktrees, lokale Settings) — nicht Teil der Website
+/.claude/
