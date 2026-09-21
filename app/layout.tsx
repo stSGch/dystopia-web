@@ -1,4 +1,9 @@
 import "./globals.css";
+// Barlow-Superfamilie self-hosted (Flyer-Typografie) — kein Google-Fonts-Request
+import "@fontsource/barlow/600.css";
+import "@fontsource/barlow/700.css";
+import "@fontsource/barlow-condensed/600.css";
+import "@fontsource/barlow-condensed/700.css";
 import Script from "next/script";
 import type { Metadata, Viewport } from "next";
 

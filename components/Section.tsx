@@ -10,18 +10,19 @@ export default function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="relative mx-auto max-w-6xl px-6 py-20">
-      <div className="flex items-center gap-3">
-        <span className="h-2 w-2 rounded-full bg-[#cd4903] pulse-dot" />
-        <p className="text-[11px] tracking-[0.3em] text-white/55">
+    <section id={id} className="relative border-t border-white/10">
+      <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        {/* Label sitzt auf der Trennlinie — technische Zeichnung statt Karten-Deko */}
+        <span className="font-wide absolute -top-[0.65em] left-6 bg-[#07080a] pr-4 text-[11px] font-bold tracking-[0.25em] text-[#ff6a1a] sm:left-[max(1.5rem,calc((100%-72rem)/2+1.5rem))]">
           {eyebrow}
-        </p>
+        </span>
+
+        <h2 className="font-display max-w-4xl text-5xl font-bold uppercase leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
+          {title}
+        </h2>
+
+        <div className="mt-12">{children}</div>
       </div>
-      <h2 className="mt-3 text-3xl sm:text-4xl font-black tracking-tight">
-        {title}
-      </h2>
-      <div className="mt-3 h-px w-24 hairline-orange" />
-      <div className="mt-10">{children}</div>
     </section>
   );
 }

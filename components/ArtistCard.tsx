@@ -1,123 +1,122 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 export type Tier = "Headliner" | "Swiss Support" | "Support" | string;
 
+/**
+ * Harte, flyer-treue Karte: eckig, 1px-Kante, Name in Barlow Condensed.
+ * Headliner mit `video`: Hover/Fokus spielt den Präsentations-Clip
+ * (preload="none" — geladen wird erst bei der ersten Interaktion).
+ */
 export default function ArtistCard({
   name,
   tier,
   image,
+  video,
   delay = 0,
-  blurred = false,
+  compact = false,
 }: {
   name: string;
   tier: Tier;
   image: string;
+  video?: string;
   delay?: number;
-  blurred?: boolean;
+  /** Flachere Karte (4:3) für die Support-Reihe — bricht das Einheitsraster */
+  compact?: boolean;
 }) {
   const isHeadliner = tier === "Headliner";
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  const play = () => {
+    if (reducedMotion) return;
+    videoRef.current?.play().catch(() => {});
+  };
+  const stop = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.pause();
+    v.currentTime = 0;
+  };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      initial={reducedMotion ? false : { opacity: 0, y: 10 }}
+      whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, delay, ease: "easeOut" }}
       className={
-        "group relative overflow-hidden rounded-2xl border bg-black lift " +
+        "group relative overflow-hidden border bg-black " +
         (isHeadliner
-          ? "border-[#cd4903]/50 hover:border-[#ff6a1a]/80"
-          : "border-white/10 hover:border-[#cd4903]/40")
+          ? "border-[#cd4903]/60 hover:border-[#ff6a1a]"
+          : "border-white/12 hover:border-[#cd4903]/60")
       }
+      onMouseEnter={video ? play : undefined}
+      onMouseLeave={video ? stop : undefined}
     >
-      {/* Portrait */}
-      <div className="relative aspect-square w-full overflow-hidden">
+      {/* Portrait / Video */}
+      <div
+        className={
+          "relative w-full overflow-hidden " +
+          (compact ? "aspect-[4/3]" : "aspect-square")
+        }
+      >
         <Image
           src={image}
-          alt={
-            blurred
-              ? "Mystery Act — Reveal soon bei DYSTOPIA"
-              : `${name} — Drum & Bass ${tier} bei DYSTOPIA, Stadtsaal Wil 19.09.2026`
-          }
+          alt={`${name} — Drum & Bass ${tier} bei DYSTOPIA, Stadtsaal Wil 19.09.2026`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className={
-            "object-cover transition duration-700 group-hover:scale-[1.04] " +
-            (blurred ? "blur-2xl scale-110 brightness-50 saturate-50" : "")
-          }
+          className="object-cover transition duration-500 group-hover:scale-[1.03]"
         />
 
-        {/* Bottom gradient for text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-
-        {/* Subtle orange duotone wash on hover (so all photos feel like one set) */}
-        {!blurred && (
-          <div className="absolute inset-0 bg-[#cd4903]/0 mix-blend-multiply transition duration-500 group-hover:bg-[#cd4903]/15" />
+        {video && (
+          <video
+            ref={videoRef}
+            className="motion-video absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+            src={video}
+            muted
+            loop
+            playsInline
+            preload="none"
+            aria-hidden
+          />
         )}
 
-        {/* Extra dark overlay when blurred */}
-        {blurred && (
-          <div className="absolute inset-0 bg-black/40" />
-        )}
+        {/* Lesbarkeits-Verlauf unten */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
 
-        {/* Brushed-metal sheen */}
-        <div className="absolute inset-0 metal-texture opacity-20 pointer-events-none" />
-
-        {/* Tier badge */}
+        {/* Tier-Marke: hartes Rechteck, Flyer-Sprache */}
         <span
           className={
-            "absolute top-3 left-3 text-[10px] tracking-[0.3em] rounded-full px-3 py-1 backdrop-blur " +
+            "font-wide absolute top-0 left-0 px-3 py-1.5 text-[10px] font-bold tracking-[0.22em] uppercase " +
             (isHeadliner
-              ? "border border-[#cd4903]/60 bg-[#cd4903]/25 text-white"
-              : "border border-white/20 bg-black/50 text-white/80")
+              ? "bg-[#cd4903] text-white"
+              : "border-r border-b border-white/15 bg-black/70 text-white/80")
           }
         >
-          {tier.toUpperCase()}
+          {tier}
         </span>
 
-        {/* Pulsing dot for revealed Headliners */}
-        {isHeadliner && !blurred && (
-          <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-[#ff6a1a] pulse-dot" />
-        )}
-
-        {/* Center "REVEAL SOON" stamp when blurred */}
-        {blurred && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="rounded-full border border-[#cd4903]/50 bg-black/60 backdrop-blur px-5 py-2">
-              <span className="text-[11px] tracking-[0.35em] text-[#ff6a1a]">
-                REVEAL SOON
-              </span>
-            </div>
-          </div>
+        {video && (
+          <span className="font-wide absolute top-0 right-0 border-b border-l border-white/15 bg-black/70 px-2.5 py-1.5 text-[9px] font-bold tracking-[0.2em] text-white/70 uppercase">
+            ▶ Clip
+          </span>
         )}
 
         {/* Name */}
         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
           <p
-            className="text-2xl sm:text-[26px] font-black tracking-tight text-white"
+            className={
+              "font-display font-bold uppercase leading-none tracking-tight text-white " +
+              (compact ? "text-3xl sm:text-4xl" : "text-4xl sm:text-[42px]")
+            }
             style={{ textShadow: "0 2px 18px rgba(0,0,0,0.7)" }}
           >
-            {blurred ? "?? ??? ??" : name}
+            {name}
           </p>
-        </div>
-      </div>
-
-      {/* Bottom hairline + meta strip */}
-      <div className="relative px-4 sm:px-5 py-3 border-t border-white/10 bg-gradient-to-b from-black to-[#0a0a0c]">
-        <div className="flex items-center justify-between">
-          <p className="text-[11px] tracking-[0.25em] text-white/55">
-            {blurred
-              ? "SIGNAL VERSCHLÜSSELT"
-              : isHeadliner
-              ? "MAIN STAGE · DYSTOPIA"
-              : "DYSTOPIA · 19.09.2026"}
-          </p>
-          <span className="text-[11px] tracking-[0.3em] text-white/35 group-hover:text-[#ff6a1a] transition">
-            →
-          </span>
         </div>
       </div>
     </motion.div>

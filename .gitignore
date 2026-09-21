@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Rohmaterial (Fotos/Videos/Flyer vom Grafiker) — liegt lokal, nicht im Repo
 /material/
+
+# Video-Rohschnitte (aus material/Video kopiert) — erst nach Kompression committen
+/public/video/

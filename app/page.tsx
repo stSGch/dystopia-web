@@ -4,18 +4,23 @@ import Section from "@/components/Section";
 import ArtistCard from "@/components/ArtistCard";
 import Pill from "@/components/Pill";
 import Hero from "@/components/sections/Hero";
+import WilVsDnb from "@/components/sections/WilVsDnb";
 
 const TICKET_URL = "https://dystopia.shop.bookinea.app";
 const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Stadtsaal+Wil+Schweiz";
 
-const LINEUP = [
-  { name: "Arcando",       tier: "Headliner",     image: "/artists/arcando.webp",       blurred: false },
-  { name: "Fox Stevenson", tier: "Headliner",     image: "/artists/fox-stevenson.webp", blurred: false },
-  { name: "Tantron",       tier: "Headliner",     image: "/artists/tantron.webp",       blurred: false },
-  { name: "NPSTR",         tier: "Swiss Support", image: "/artists/npstr.webp",         blurred: false },
-  { name: "Gingerbell",    tier: "Support",       image: "/artists/gingerbell.webp",    blurred: false },
-  { name: "LUiFF",         tier: "Support",       image: "/artists/luiff.webp",         blurred: false },
+// Reihenfolge wie auf dem offiziellen Flyer
+const HEADLINERS = [
+  { name: "Tantron",       image: "/artists/tantron.webp",       video: "/video/tantron.mp4" },
+  { name: "Fox Stevenson", image: "/artists/fox-stevenson.webp", video: "/video/fox-stevenson.mp4" },
+  { name: "Arcando",       image: "/artists/arcando.webp",       video: "/video/arcando.mp4" },
+] as const;
+
+const SUPPORTS = [
+  { name: "NPSTR",      tier: "Swiss Support", image: "/artists/npstr.webp" },
+  { name: "Gingerbell", tier: "Support",       image: "/artists/gingerbell.webp" },
+  { name: "LUiFF",      tier: "Support",       image: "/artists/luiff.webp" },
 ] as const;
 
 // Schema.org MusicEvent — füttert Google's Event-Rich-Results
@@ -87,7 +92,7 @@ const ORG_JSONLD = {
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-[#cd4903] selection:text-white">
+    <>
       {/* JSON-LD: Event Schema für Google Rich Results */}
       <script
         type="application/ld+json"
@@ -109,66 +114,72 @@ export default function Page() {
 
       <Navbar />
 
-      <Hero
-        tagline="NEW DRUM 'N' BASS EXPERIENCE — WIL SG / CH"
-        dateText="Samstag, 19. September 2026 — ab 21 Uhr"
-        venueText="Stadtsaal Wil — Indoor • direkt am Bhf"
-        primaryCta={{ label: "Tickets sichern", href: TICKET_URL }}
-        secondaryCta={{ label: "Line-Up", href: "#lineup" }}
-      />
+      {/* Inhalt: Navbar und Footer stehen als Landmarks NEBEN main */}
+      <main className="min-h-screen bg-[#07080a] text-white">
+      <Hero />
 
       {/* LINEUP */}
-      <Section id="lineup" eyebrow="LINE-UP" title="Line-Up komplett — sechs Acts, eine Nacht.">
-        <p className="-mt-4 mb-10 max-w-2xl text-sm text-white/70 leading-relaxed">
+      <Section id="lineup" eyebrow="LINE-UP" title="Das komplette Line-Up">
+        <p className="-mt-6 mb-12 max-w-2xl text-[15px] leading-relaxed text-white/70">
           Headliner:{" "}
-          <span className="text-[#ff6a1a] font-semibold">Arcando</span>,{" "}
-          <span className="text-[#ff6a1a] font-semibold">Fox Stevenson</span>{" "}
-          und{" "}
-          <span className="text-[#ff6a1a] font-semibold">Tantron</span>. Swiss
+          <span className="font-semibold text-[#ff6a1a]">Tantron</span>,{" "}
+          <span className="font-semibold text-[#ff6a1a]">Fox Stevenson</span>{" "}
+          und <span className="font-semibold text-[#ff6a1a]">Arcando</span>.
+          Swiss Support:{" "}
+          <span className="font-semibold text-[#ff6a1a]">NPSTR</span>. Weiterer
           Support:{" "}
-          <span className="text-[#ff6a1a] font-semibold">NPSTR</span>. Weiterer
-          Support:{" "}
-          <span className="text-[#ff6a1a] font-semibold">Gingerbell</span>{" "}
-          und{" "}
-          <span className="text-[#ff6a1a] font-semibold">LUiFF</span>. Set-Times
+          <span className="font-semibold text-[#ff6a1a]">Gingerbell</span> und{" "}
+          <span className="font-semibold text-[#ff6a1a]">LUiFF</span>. Set-Times
           folgen kurz vor dem Event auf Instagram.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {LINEUP.map((a, i) => (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {HEADLINERS.map((a, i) => (
             <ArtistCard
               key={a.name}
               name={a.name}
-              tier={a.tier}
+              tier="Headliner"
               image={a.image}
-              blurred={a.blurred}
+              video={a.video}
               delay={i * 0.05}
             />
           ))}
         </div>
 
-        <div className="mt-10 rounded-2xl border border-[#cd4903]/30 bg-[#cd4903]/5 p-5 text-sm text-white/80">
-          <span className="font-semibold text-[#ff6a1a]">Line-Up komplett.</span>{" "}
-          Set-Times und weitere Updates folgen auf Instagram.
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SUPPORTS.map((a, i) => (
+            <ArtistCard
+              key={a.name}
+              name={a.name}
+              tier={a.tier}
+              image={a.image}
+              delay={i * 0.05}
+              compact
+            />
+          ))}
         </div>
       </Section>
 
+      {/* WIL VS. DNB — Video-Band */}
+      <WilVsDnb />
+
       {/* TICKETS */}
-      <Section id="tickets" eyebrow="TICKETS" title="Jetzt Tickets sichern">
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="relative overflow-hidden rounded-2xl border border-[#cd4903]/40 bg-gradient-to-b from-[#cd4903]/15 to-black/40 p-6">
-            <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-[#cd4903]/30 blur-3xl" />
-            <p className="relative text-[11px] tracking-[0.3em] text-white/60">
-              OFFIZIELLER TICKETSHOP
+      <Section id="tickets" eyebrow="TICKETS" title="Tickets">
+        <div className="grid gap-4 lg:grid-cols-12">
+          {/* Preisblock */}
+          <div className="border border-[#cd4903]/50 bg-[#cd4903]/[0.07] p-7 lg:col-span-5">
+            <p className="font-wide text-[11px] font-bold tracking-[0.25em] text-white/60 uppercase">
+              Regular Ticket
             </p>
-            <p className="relative mt-3 text-2xl font-black leading-tight">
-              Bookinea
+            <p className="font-display mt-3 text-7xl font-bold uppercase leading-none text-white">
+              CHF <span className="text-[#ff6a1a]">28.90</span>
             </p>
-            <p className="relative mt-2 text-sm text-white/75">
-              Sichere Bezahlung, E-Ticket per Mail, Wiederverkauf abgesichert.
+            <p className="mt-4 text-sm leading-relaxed text-white/75">
+              Offizieller Vorverkauf über Bookinea — sichere Bezahlung,
+              E-Ticket per Mail, Wiederverkauf abgesichert.
             </p>
             <a
-              className="relative mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-[#cd4903] text-white px-5 py-3 text-sm font-semibold tracking-wider hover:brightness-110 transition shadow-[0_0_25px_rgba(205,73,3,0.45)]"
+              className="font-display mt-7 inline-flex w-full items-center justify-center bg-[#cd4903] px-6 py-4 text-xl font-bold uppercase tracking-wide text-white transition hover:bg-[#ff6a1a] hover:text-black"
               href={TICKET_URL}
               target="_blank"
               rel="noopener noreferrer"
@@ -179,21 +190,23 @@ export default function Page() {
             </a>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:col-span-2">
-            <p className="text-sm text-white/80 leading-relaxed">
-              Indoor-Venue. Heftige Visuals. Kompromissloser Sound. Ein Auftrag:
-              die Tanzfläche vereinen. Türöffnung um 21:00 Uhr.
+          {/* Fakten */}
+          <div className="border border-white/10 bg-white/[0.03] p-7 lg:col-span-7">
+            <p className="text-[15px] leading-relaxed text-white/80">
+              Türöffnung um 21 Uhr, der letzte Drop kurz vor 3. Dazwischen:
+              sechs Acts, LED-Walls, zwei Bars und ein Soundsystem, das man im
+              Brustkorb spürt.
             </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <Pill>Drinks & Food</Pill>
-              <Pill>Cash and Cashless Payment</Pill>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Pill>Drinks &amp; Food</Pill>
+              <Pill>Cash &amp; Cashless</Pill>
               <Pill>High-End Lightshow</Pill>
               <Pill>LED Walls</Pill>
               <Pill>Garderobe</Pill>
               <Pill>Ab 18 Jahren</Pill>
             </div>
 
-            <div className="mt-6 grid sm:grid-cols-3 gap-3 text-sm">
+            <div className="mt-8 grid gap-px border border-white/10 bg-white/10 sm:grid-cols-3">
               <InfoBlock label="Datum" value="Sa, 19.09.2026" />
               <InfoBlock label="Türöffnung" value="21:00 Uhr" />
               <InfoBlock label="Venue" value="Stadtsaal Wil" />
@@ -203,15 +216,13 @@ export default function Page() {
       </Section>
 
       {/* INFO & FAQ */}
-      <Section id="faq" eyebrow="INFO & FAQ" title="Alles was ihr wissen müsst">
+      <Section id="faq" eyebrow="INFO & FAQ" title="Alles, was ihr wissen müsst">
         <div className="space-y-3">
           <Faq q="Was ist DYSTOPIA — das Drum-and-Bass-Event in Wil?">
-            DYSTOPIA ist das neue Drum-and-Bass-Event in der Ostschweiz —
-            am 19. September 2026 im Stadtsaal Wil (SG). Headliner sind
-            Arcando, Fox Stevenson und Tantron, Support kommt von NPSTR
-            (Swiss), Gingerbell und LUiFF. Dazu: massive LED-Walls,
-            kompromisslose Lightshow, grosse Bars und Foodcorner —
-            kompromissloser Drum and Bass von liquid bis neuro.
+            DYSTOPIA ist ein neues Drum-and-Bass-Event in der Ostschweiz: eine
+            Nacht im Stadtsaal Wil (SG) mit Tantron, Fox Stevenson und Arcando, dazu
+            NPSTR, Gingerbell und LUiFF. LED-Walls, Lightshow, zwei Bars,
+            Foodcorner — und Drum and Bass von liquid bis neuro.
           </Faq>
 
           <Faq q="Wann findet DYSTOPIA statt? Datum & Türöffnung">
@@ -220,22 +231,22 @@ export default function Page() {
           </Faq>
 
           <Faq q="Welche Musik läuft? Drum and Bass in der Ostschweiz">
-            Drum &amp; Bass über das volle Spektrum — von liquid bis neuro, von
-            jump-up bis dancefloor. Keine Subgenre-Mauern.
+            Drum &amp; Bass durchs volle Spektrum: liquid, neuro, jump-up,
+            dancefloor. Was drückt, wird gespielt.
           </Faq>
 
           <Faq q="Wann gibt es die Set-Times?">
-            Die Spielzeiten kommunizieren wir kurz vor dem Event über
-            Instagram und hier auf der Website.
+            Die Spielzeiten kommunizieren wir kurz vor dem Event über Instagram
+            und hier auf der Website.
           </Faq>
 
           <Faq q="Wie komme ich zum Stadtsaal Wil? (Anreise ÖV & Auto)">
-            Wil ist mit der SBB hervorragend angebunden — Bahnhof Wil und ca.
-            10 Gehminuten zum Stadtsaal. Parkplätze in den umliegenden
-            Parkhäusern. Der genaue Anreise-Guide folgt.
+            Wil ist mit der SBB hervorragend angebunden — der Stadtsaal liegt
+            direkt am Bahnhof Wil. Parkplätze gibt es im Parkhaus Bahnhof
+            direkt unter dem Saal und in den umliegenden Parkhäusern.
           </Faq>
 
-          <Faq q="Gibt es einen Mindestaltersnachweis?">
+          <Faq q="Gibt es ein Mindestalter?">
             Eintritt ab 18 Jahren. Bitte einen gültigen Ausweis (ID / Pass /
             Führerschein) mitbringen.
           </Faq>
@@ -244,41 +255,31 @@ export default function Page() {
 
       {/* LOCATION */}
       <Section id="location" eyebrow="LOCATION" title="Stadtsaal Wil">
-        <div className="grid lg:grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <h3 className="text-lg font-bold tracking-wide">Die Venue</h3>
-            <p className="mt-3 text-sm text-white/75 leading-relaxed">
-              Indoor-Venue mit viel Platz direkt am Bahnhof Wil — verwandelt in eine
-              dystopische Arena aus Licht, LEDs und Bass. Eine Bühne, ein
-              Raum, eine Mission.
+        <div className="grid gap-4 lg:grid-cols-12">
+          <div className="border border-white/10 bg-white/[0.03] p-7 lg:col-span-7">
+            <h3 className="font-display text-2xl font-bold uppercase tracking-wide">
+              Die Venue
+            </h3>
+            <p className="mt-3 text-[15px] leading-relaxed text-white/75">
+              Der Stadtsaal Wil, umgebaut für eine Nacht: LED-Walls, Licht und
+              ein Soundsystem, das den Saal füllt — direkt am Bahnhof.
             </p>
-            <p className="mt-3 text-sm text-white/75 leading-relaxed">
-              DYSTOPIA bringt kompromisslosen Drum and Bass in die Ostschweiz —
-              mitten nach Wil (SG). Der Stadtsaal Wil liegt direkt am Bahnhof und
-              ist aus St. Gallen, Winterthur, Frauenfeld, dem ganzen Thurgau und
-              aus Zürich in Minuten erreichbar. Wer ein Drum-and-Bass-Event in der
-              Ostschweiz oder ein DnB-Event in der Schweiz im September 2026 sucht,
-              ist am 19. September 2026 im Stadtsaal Wil genau richtig.
+            <p className="mt-3 text-[15px] leading-relaxed text-white/75">
+              Drum and Bass hatte in der Ostschweiz bisher kein Zuhause — das
+              ändern wir: ein DnB-Event in der Schweiz, mitten in Wil (SG).
+              Der Saal liegt direkt am Gleis — aus St. Gallen, Winterthur und
+              Zürich seid ihr in unter einer Stunde da, aus Frauenfeld und dem
+              ganzen Thurgau noch schneller. Und nach Mitternacht fahren die
+              Züge zurück.
             </p>
 
-            <div className="mt-5 text-sm text-white/75 space-y-1">
-              <div>
-                <span className="text-white/45">Stadt:</span> Wil, Schweiz
-              </div>
-              <div>
-                <span className="text-white/45">Venue:</span> Stadtsaal Wil
-              </div>
-              <div>
-                <span className="text-white/45">Adresse:</span> Bahnhofplatz 6, 9500 Wil
-              </div>
-              <div>
-                <span className="text-white/45">Datum:</span> Sa, 19.09.2026 ·
-                ab 21:00 Uhr
-              </div>
+            <div className="mt-6 grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2">
+              <InfoBlock label="Adresse" value="Bahnhofplatz 6, 9500 Wil" />
+              <InfoBlock label="Datum" value="Sa, 19.09.2026 · ab 21:00 Uhr" />
             </div>
 
             <a
-              className="mt-6 inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold hover:bg-white/10 transition"
+              className="font-display mt-7 inline-flex items-center gap-2 border border-white/25 px-6 py-3 text-lg font-bold uppercase tracking-wide transition hover:border-[#ff6a1a] hover:text-[#ff6a1a]"
               href={MAPS_URL}
               target="_blank"
               rel="noopener noreferrer"
@@ -287,52 +288,48 @@ export default function Page() {
             </a>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <div className="absolute -top-20 -right-20 h-60 w-60 rounded-full bg-[#cd4903]/10 blur-3xl" />
-            <h3 className="relative text-lg font-bold tracking-wide">
+          <div className="border border-white/10 bg-white/[0.03] p-7 lg:col-span-5">
+            <h3 className="font-display text-2xl font-bold uppercase tracking-wide">
               Anreise
             </h3>
 
-            <div className="relative mt-4 space-y-5 text-sm text-white/75">
+            <div className="mt-5 space-y-6 text-[15px] text-white/75">
               <div>
-                <p className="text-[11px] tracking-[0.3em] text-[#ff6a1a]">
-                  PER BAHN — EMPFOHLEN
+                <p className="font-wide text-[11px] font-bold tracking-[0.25em] text-[#ff6a1a] uppercase">
+                  Per Bahn — empfohlen
                 </p>
-                <p className="mt-1 leading-relaxed">
-                  Der Stadtsaal liegt direkt am Bahnhof Wil
-                  (Bahnhofplatz 6) — 1 Minute zu Fuss. SBB-Verbindungen
-                  aus Zürich, Winterthur und St. Gallen im Halb-/Stunden-
-                  takt.
+                <p className="mt-2 leading-relaxed">
+                  Der Stadtsaal liegt direkt am Bahnhof Wil (Bahnhofplatz 6) —
+                  1 Minute zu Fuss. SBB-Verbindungen aus Zürich, Winterthur und
+                  St. Gallen im Halb-/Stundentakt.
                 </p>
               </div>
 
               <div>
-                <p className="text-[11px] tracking-[0.3em] text-[#ff6a1a]">
-                  MIT DEM AUTO
+                <p className="font-wide text-[11px] font-bold tracking-[0.25em] text-[#ff6a1a] uppercase">
+                  Mit dem Auto
                 </p>
-                <p className="mt-1 leading-relaxed">
+                <p className="mt-2 leading-relaxed">
                   Das Parkhaus Bahnhof liegt direkt unter dem Stadtsaal —
-                  bequemer geht&apos;s nicht. Bitte rechtzeitig anreisen,
-                  am Wochenende kann es voll werden.
+                  bequemer geht&apos;s nicht. Bitte rechtzeitig anreisen, am
+                  Wochenende kann es voll werden.
                 </p>
               </div>
             </div>
 
-            <p className="relative mt-6 text-[11px] tracking-[0.25em] text-white/45">
-              TIPP · FRÜH KOMMEN · LETZTER ZUG CHECKEN
+            <p className="font-wide mt-8 text-[11px] font-bold tracking-[0.22em] text-white/55 uppercase">
+              Tipp · Früh kommen · Letzter Zug checken
             </p>
           </div>
         </div>
       </Section>
+      </main>
 
       {/* CONTACT / FOOTER */}
-      <footer
-        id="contact"
-        className="relative border-t border-white/10 bg-black"
-      >
+      <footer id="contact" className="relative border-t border-white/10 bg-[#07080a] text-white">
         <div className="absolute inset-x-0 top-0 h-px hairline-orange" />
         <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid gap-8 md:grid-cols-3">
             <div>
               <Image
                 src="/dystopia-symbol.png"
@@ -341,14 +338,14 @@ export default function Page() {
                 height={60}
                 className="h-10 w-auto"
               />
-              <p className="mt-4 text-sm text-white/60 leading-relaxed max-w-xs">
-                Dystopia. Hottest DnB. Stadtsaal Wil. 19.09.2026.
+              <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
+                Drum and Bass im Stadtsaal Wil — 19. September 2026.
               </p>
             </div>
 
             <div>
-              <p className="text-[11px] tracking-[0.3em] text-white/55">
-                KONTAKT
+              <p className="font-wide text-[11px] font-bold tracking-[0.25em] text-white/55 uppercase">
+                Kontakt
               </p>
               <p className="mt-3 text-sm text-white/75">
                 Booking · Partner · Presse
@@ -360,7 +357,7 @@ export default function Page() {
                 contact@dystopia-dnb.ch
               </a>
               <a
-                className="mt-1 block text-sm text-white/65 hover:text-white transition"
+                className="mt-1 block text-sm text-white/65 transition hover:text-white"
                 href="tel:+41719320068"
               >
                 +41 71 932 00 68
@@ -368,12 +365,12 @@ export default function Page() {
             </div>
 
             <div>
-              <p className="text-[11px] tracking-[0.3em] text-white/55">
-                SOCIAL
+              <p className="font-wide text-[11px] font-bold tracking-[0.25em] text-white/55 uppercase">
+                Social
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
                 <a
-                  className="rounded-2xl border border-white/20 bg-white/5 px-4 py-2 text-sm hover:bg-white/10 transition"
+                  className="font-wide border border-white/20 bg-white/5 px-4 py-2 text-[13px] font-semibold tracking-[0.1em] uppercase transition hover:border-[#ff6a1a] hover:text-[#ff6a1a]"
                   href="https://www.instagram.com/dystopia.dnb"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -382,37 +379,44 @@ export default function Page() {
                   Instagram →
                 </a>
               </div>
-              <p className="mt-3 text-[11px] text-white/40">
+              <p className="mt-3 text-[11px] text-white/60">
                 Folgt für Set-Times und Updates.
               </p>
             </div>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 text-xs text-white/45">
+          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 text-xs text-white/55">
             <p>© {new Date().getFullYear()} DYSTOPIA. Alle Rechte vorbehalten.</p>
             <div className="flex gap-5">
-              <a className="hover:text-white/80 transition" href="/imprint/">
+              <a className="transition hover:text-white/80" href="/imprint/">
                 Impressum
               </a>
-              <a className="hover:text-white/80 transition" href="/privacy/">
+              <a className="transition hover:text-white/80" href="/privacy/">
                 Datenschutz
               </a>
             </div>
           </div>
         </div>
       </footer>
-    </main>
+    </>
   );
 }
 
 function Faq({ q, children }: { q: string; children: React.ReactNode }) {
   return (
-    <details className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 hover:border-[#cd4903]/30 transition">
-      <summary className="cursor-pointer list-none font-semibold flex items-center justify-between gap-4">
-        <h3 className="tracking-wide text-base font-semibold">{q}</h3>
-        <span className="text-[#ff6a1a] group-open:rotate-45 transition">+</span>
+    <details className="group border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#cd4903]/40">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+        <h3 className="font-display text-xl font-semibold uppercase tracking-wide">
+          {q}
+        </h3>
+        <span
+          aria-hidden="true"
+          className="font-display text-2xl leading-none text-[#ff6a1a] transition group-open:rotate-45"
+        >
+          +
+        </span>
       </summary>
-      <div className="mt-3 text-sm text-white/75 leading-relaxed">
+      <div className="mt-3 max-w-3xl text-[15px] leading-relaxed text-white/75">
         {children}
       </div>
     </details>
@@ -421,9 +425,13 @@ function Faq({ q, children }: { q: string; children: React.ReactNode }) {
 
 function InfoBlock({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-black/30 p-3">
-      <p className="text-[10px] tracking-[0.3em] text-white/45">{label}</p>
-      <p className="mt-1 text-sm font-semibold text-white">{value}</p>
+    <div className="bg-[#0a0b0d] p-4">
+      <p className="font-wide text-[10px] font-bold tracking-[0.25em] text-white/55 uppercase">
+        {label}
+      </p>
+      <p className="font-display mt-1.5 text-lg font-semibold uppercase text-white">
+        {value}
+      </p>
     </div>
   );
 }

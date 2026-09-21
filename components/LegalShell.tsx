@@ -20,7 +20,7 @@ export default function LegalShell({
               height={28}
               className="h-7 w-auto"
             />
-            <span className="font-black tracking-[0.3em] text-sm hidden sm:inline">
+            <span className="font-wide hidden text-sm font-bold tracking-[0.25em] uppercase sm:inline">
               DYSTOPIA
             </span>
           </Link>
@@ -34,14 +34,12 @@ export default function LegalShell({
       </header>
 
       <article className="mx-auto max-w-3xl px-6 pt-32 pb-24">
-        <div className="flex items-center gap-3">
-          <span className="h-2 w-2 rounded-full bg-[#cd4903] pulse-dot" />
-          <p className="text-[11px] tracking-[0.3em] text-white/55">LEGAL</p>
-        </div>
-        <h1 className="mt-3 text-3xl sm:text-4xl font-black tracking-tight">
+        <p className="font-wide text-[11px] font-bold tracking-[0.25em] text-[#ff6a1a] uppercase">
+          Legal
+        </p>
+        <h1 className="font-display mt-3 text-4xl font-bold uppercase leading-[0.95] tracking-tight sm:text-5xl">
           {title}
         </h1>
-        <div className="mt-3 h-px w-24 hairline-orange" />
 
         <div className="prose prose-invert mt-10 max-w-none text-white/80 leading-relaxed [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:tracking-wide [&_h2]:text-white [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-base [&_h3]:font-semibold [&_h3]:tracking-wide [&_h3]:text-white/90 [&_p]:mt-3 [&_p]:text-sm [&_a]:text-[#ff6a1a] [&_a]:underline-offset-4 hover:[&_a]:underline">
           {children}
