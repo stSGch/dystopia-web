@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DYSTOPIA — Drum & Bass Event Website
 
-## Getting Started
+Website zum Event **DYSTOPIA**: Drum & Bass am **Samstag, 19. September 2026** im
+**Stadtsaal Wil (SG)** — Türöffnung 21:00, Schluss 03:00. Veranstalter:
+TBH Gastro & Event AG. Tickets über [Bookinea](https://dystopia.shop.bookinea.app).
 
-First, run the development server:
+**Live:** [dystopia-dnb.ch](https://dystopia-dnb.ch)
+
+Line-Up: Tantron · Fox Stevenson · Arcando (Headliner) — NPSTR (Swiss Support) —
+Gingerbell · LUiFF (Support)
+
+## Branches
+
+| Branch | Inhalt |
+|---|---|
+| **`master`** | **Prod-Stand** — entspricht immer der deployten Live-Website. Jede Änderung hier wird nach dem Deploy auch hierhin gepusht. |
+| **`redesign`** | Fertig entwickeltes **Redesign im Backlog** (flyer-treue Barlow-Typografie, neue Copy, Video-Integration, Accessibility-Fixes). Geht vorerst **nicht** live. Alle Details, offene Punkte und die Wiederaufnahme-Anleitung stehen im [`REDESIGN-BACKLOG.md`](https://github.com/stSGch/dystopia-web/blob/redesign/REDESIGN-BACKLOG.md) auf dem Branch. |
+
+## Tech-Stack
+
+- **Next.js 16** (App Router) mit **Static Export** (`output: "export"`) — reines
+  HTML/CSS/JS, kein Node-Server nötig
+- **Tailwind CSS v4**
+- SEO: Schema.org **MusicEvent** + **Organization** (JSON-LD), Sitemap, OpenGraph,
+  regionale Keyword-Ausrichtung (Drum and Bass Ostschweiz / Wil SG)
+- Analytics: Umami (cookie-frei)
+
+## Entwicklung
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+→ [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build & Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx next build
+```
 
-## Learn More
+Erzeugt den Ordner `out/` mit der kompletten statischen Website. Deployment =
+**manueller Upload von `out/`** (FTP/SFTP) auf den Webhost (nginx).
 
-To learn more about Next.js, take a look at the following resources:
+Wichtig: Redirects, Cache-Header und HSTS können wegen des Static Exports nicht
+im Next-Code konfiguriert werden — das liegt in der nginx-Konfiguration des Hosts.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Was bewusst NICHT im Repo liegt
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **`material/`** — Rohmaterial (Pressefotos, Videos, Flyer-Druckdaten, Logos,
+  ~500 MB). Liegt nur lokal; Bezugsquelle ist der Grafiker/Veranstalter.
+- **`public/video/`** (nur auf `redesign`) — unkomprimierte Videoschnitte; das
+  Mapping zur Wiederherstellung aus `material/Video/` steht im
+  `REDESIGN-BACKLOG.md`.
+- **`.claude/`** — lokale Tooling-Arbeitsdaten.
 
-## Deploy on Vercel
+## Kontakt
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Booking · Partner · Presse: [contact@dystopia-dnb.ch](mailto:contact@dystopia-dnb.ch)
+· Instagram: [@dystopia.dnb](https://www.instagram.com/dystopia.dnb)
