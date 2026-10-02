@@ -113,15 +113,13 @@ export default function PrivacyPage() {
       <h3>4.5 Links zu unseren Social-Media-Profilen</h3>
       <p>
         Unsere Website enthält Links zu unseren Profilen auf{" "}
-        <strong>Instagram</strong> und <strong>Facebook</strong> (Anbieterin
-        jeweils: Meta Platforms Ireland Ltd.) sowie auf{" "}
-        <strong>TikTok</strong> (Anbieterin: TikTok Technology Ltd.). Es
-        handelt sich um reine Verlinkungen — Social-Media-Plugins oder
-        eingebettete Inhalte dieser Plattformen setzen wir nicht ein. Daten
-        werden erst an die jeweilige Plattform übertragen, wenn Sie einen
-        dieser Links anklicken und damit unsere Website verlassen. Ab diesem
-        Zeitpunkt gelten die Datenschutzbestimmungen der jeweiligen
-        Anbieterin.
+        <strong>Instagram</strong>, <strong>Facebook</strong> und{" "}
+        <strong>TikTok</strong>. Es handelt sich um reine Verlinkungen —
+        Social-Media-Plugins oder eingebettete Inhalte dieser Plattformen
+        setzen wir nicht ein. Daten werden erst an die jeweilige Plattform
+        übertragen, wenn Sie einen dieser Links anklicken und damit unsere
+        Website verlassen. Ab diesem Zeitpunkt gelten die
+        Datenschutzbestimmungen der jeweiligen Plattform.
       </p>
 
       <h2>5. Zwecke der Bearbeitung</h2>
