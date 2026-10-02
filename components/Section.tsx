@@ -2,11 +2,14 @@ export default function Section({
   id,
   eyebrow,
   title,
+  intro,
   children,
 }: {
   id: string;
   eyebrow: string;
   title: string;
+  /** Optionale Unterzeile unter dem Titel */
+  intro?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -21,6 +24,11 @@ export default function Section({
         {title}
       </h2>
       <div className="mt-3 h-px w-24 hairline-orange" />
+      {intro && (
+        <p className="mt-5 max-w-2xl text-sm text-white/70 leading-relaxed">
+          {intro}
+        </p>
+      )}
       <div className="mt-10">{children}</div>
     </section>
   );

@@ -11,12 +11,15 @@ export default function ArtistCard({
   image,
   delay = 0,
   blurred = false,
+  compact = false,
 }: {
   name: string;
   tier: Tier;
   image: string;
   delay?: number;
   blurred?: boolean;
+  /** Kleine Karte für den Line-up-Rückblick: ohne Badge und Meta-Zeile */
+  compact?: boolean;
 }) {
   const isHeadliner = tier === "Headliner";
 
@@ -40,10 +43,14 @@ export default function ArtistCard({
           alt={
             blurred
               ? "Mystery Act — Reveal soon bei DYSTOPIA"
-              : `${name} — Drum & Bass ${tier} bei DYSTOPIA, Stadtsaal Wil 19.09.2026`
+              : `${name} — Drum & Bass ${tier} bei DYSTOPIA 2026, Stadtsaal Wil`
           }
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes={
+            compact
+              ? "(max-width: 1024px) 33vw, 180px"
+              : "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          }
           className={
             "object-cover transition duration-700 group-hover:scale-[1.04] " +
             (blurred ? "blur-2xl scale-110 brightness-50 saturate-50" : "")
@@ -67,7 +74,7 @@ export default function ArtistCard({
         <div className="absolute inset-0 metal-texture opacity-20 pointer-events-none" />
 
         {/* Tier badge */}
-        <span
+        {!compact && <span
           className={
             "absolute top-3 left-3 text-[10px] tracking-[0.3em] rounded-full px-3 py-1 backdrop-blur " +
             (isHeadliner
@@ -76,7 +83,7 @@ export default function ArtistCard({
           }
         >
           {tier.toUpperCase()}
-        </span>
+        </span>}
 
         {/* Pulsing dot for revealed Headliners */}
         {isHeadliner && !blurred && (
@@ -95,18 +102,26 @@ export default function ArtistCard({
         )}
 
         {/* Name */}
-        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+        <div className={"absolute inset-x-0 bottom-0 " + (compact ? "p-2.5 sm:p-3" : "p-4 sm:p-5")}>
           <p
-            className="text-2xl sm:text-[26px] font-black tracking-tight text-white"
+            className={
+              "font-black tracking-tight text-white " +
+              (compact ? "text-sm sm:text-base leading-tight" : "text-2xl sm:text-[26px]")
+            }
             style={{ textShadow: "0 2px 18px rgba(0,0,0,0.7)" }}
           >
             {blurred ? "?? ??? ??" : name}
           </p>
+          {compact && (
+            <p className="mt-0.5 text-[9px] sm:text-[10px] tracking-[0.2em] text-white/60">
+              {tier.toUpperCase()}
+            </p>
+          )}
         </div>
       </div>
 
       {/* Bottom hairline + meta strip */}
-      <div className="relative px-4 sm:px-5 py-3 border-t border-white/10 bg-gradient-to-b from-black to-[#0a0a0c]">
+      {!compact && <div className="relative px-4 sm:px-5 py-3 border-t border-white/10 bg-gradient-to-b from-black to-[#0a0a0c]">
         <div className="flex items-center justify-between">
           <p className="text-[11px] tracking-[0.25em] text-white/55">
             {blurred
@@ -119,7 +134,7 @@ export default function ArtistCard({
             →
           </span>
         </div>
-      </div>
+      </div>}
     </motion.div>
   );
 }

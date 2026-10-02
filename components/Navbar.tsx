@@ -2,10 +2,11 @@ import Image from "next/image";
 
 export default function Navbar() {
   const links = [
-    { href: "#lineup", label: "Line-Up" },
-    { href: "#tickets", label: "Tickets" },
+    { href: "#aftermovie", label: "Aftermovie" },
+    { href: "#gallery", label: "Gallery" },
+    { href: "#lineup", label: "Line-up 2026" },
+    { href: "#dystopia-2027", label: "2027" },
     { href: "#faq", label: "FAQ" },
-    { href: "#location", label: "Location" },
     { href: "#contact", label: "Kontakt" },
   ];
 
@@ -40,14 +41,14 @@ export default function Navbar() {
         </nav>
 
         <a
-          href="https://dystopia.shop.bookinea.app"
+          href="https://www.instagram.com/dystopia.dnb"
           target="_blank"
           rel="noopener noreferrer"
-          data-umami-event="Tickets Click"
+          data-umami-event="Instagram Click"
           data-umami-event-source="navbar"
           className="rounded-xl bg-[#cd4903] px-4 py-2 text-sm font-semibold text-white hover:brightness-110 transition shadow-[0_0_20px_rgba(205,73,3,0.35)]"
         >
-          Tickets
+          Stay Connected
         </a>
       </div>
     </div>

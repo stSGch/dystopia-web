@@ -3,9 +3,12 @@ import Script from "next/script";
 import type { Metadata, Viewport } from "next";
 
 const SITE_URL = "https://dystopia-dnb.ch";
-const TITLE_LONG = "DYSTOPIA — Drum & Bass Event Wil SG | 19.09.2026 Stadtsaal";
+const TITLE_LONG = "DYSTOPIA — Aftermovie & Recap 2026 | Drum & Bass Wil SG";
 const DESCRIPTION =
-  "DYSTOPIA — Drum & Bass Event in der Ostschweiz, Sa 19.09.2026 im Stadtsaal Wil (SG). Line-Up: Arcando, Fox Stevenson, Tantron, NPSTR, Gingerbell & LUiFF. Tickets jetzt sichern.";
+  "Thank you, Wil. Aftermovie und Fotos von DYSTOPIA, dem Drum & Bass Event vom 19.09.2026 im Stadtsaal Wil (SG). DYSTOPIA 2027 ist in Planung.";
+const OG_TITLE = "DYSTOPIA — Aftermovie & Recap 2026";
+const OG_DESCRIPTION =
+  "Thank you, Wil. Das Aftermovie und die Bilder vom 19.09.2026 im Stadtsaal Wil. DYSTOPIA 2027 ist in Planung.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -29,8 +32,10 @@ export const metadata: Metadata = {
     "NPSTR",
     "Gingerbell",
     "LUiFF",
-    "Bookinea",
-    "19.09.2026",
+    "Aftermovie",
+    "Recap",
+    "DYSTOPIA 2026",
+    "DYSTOPIA 2027",
   ],
   alternates: {
     canonical: "/",
@@ -43,25 +48,31 @@ export const metadata: Metadata = {
     locale: "de_CH",
     url: `${SITE_URL}/`,
     siteName: "DYSTOPIA",
-    title: "DYSTOPIA — Drum & Bass Event",
-    description:
-      "19.09.2026 · Stadtsaal Wil · Drum & Bass Event. Headliner: Arcando, Fox Stevenson & Tantron. Tickets jetzt sichern.",
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-recap.jpg",
         width: 1200,
         height: 630,
-        alt: "DYSTOPIA — Drum & Bass Event · 19.09.2026 Stadtsaal Wil",
+        alt: "DYSTOPIA — Aftermovie & Recap 2026 · DYSTOPIA 2027 in Planung",
         type: "image/jpeg",
+      },
+    ],
+    videos: [
+      {
+        url: `${SITE_URL}/video/aftermovie-2026.mp4`,
+        width: 720,
+        height: 1280,
+        type: "video/mp4",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DYSTOPIA — Drum & Bass Event",
-    description:
-      "19.09.2026 · Stadtsaal Wil · Drum & Bass Event. Headliner: Arcando, Fox Stevenson & Tantron.",
-    images: ["/og-image.jpg"],
+    title: OG_TITLE,
+    description: OG_DESCRIPTION,
+    images: ["/og-recap.jpg"],
   },
   icons: {
     icon: [
@@ -99,10 +110,9 @@ export default function RootLayout({
   return (
     <html lang="de-CH">
       <body className="antialiased">
-        {/* Verbindungs-Vorwärmung: Analytics-Host + Ticketshop.
+        {/* Verbindungs-Vorwärmung: Analytics-Host.
             React 19 hebt diese <link>-Tags automatisch in den <head>. */}
         <link rel="preconnect" href="https://cloud.umami.is" />
-        <link rel="dns-prefetch" href="https://dystopia.shop.bookinea.app" />
           {children}
         {/* Umami Analytics — cookie-frei, kein Personenbezug */}
         <Script

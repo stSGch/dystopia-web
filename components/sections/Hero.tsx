@@ -2,22 +2,9 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import AftermoviePlayer from "@/components/AftermoviePlayer";
 
-type HeroProps = {
-  tagline?: string;
-  dateText?: string;
-  venueText?: string;
-  primaryCta?: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
-};
-
-export default function Hero({
-  tagline = "NEW DRUM 'N' BASS EXPERIENCE — WIL / SCHWEIZ",
-  dateText = "Samstag, 19. September 2026 — ab 21 Uhr",
-  venueText = "Stadtsaal Wil — Indoor • bis zu 1000 Raver",
-  primaryCta = { label: "Tickets sichern", href: "https://dystopia.shop.bookinea.app" },
-  secondaryCta = { label: "Line-Up", href: "#lineup" },
-}: HeroProps) {
+export default function Hero() {
   return (
     <header
       id="top"
@@ -63,116 +50,127 @@ export default function Hero({
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-6 pt-28 pb-20 sm:pt-32 sm:pb-28">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 backdrop-blur px-4 py-2 text-[11px] tracking-[0.25em] text-white/80"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-[#ff6a1a] pulse-dot" />
-          {tagline}
-        </motion.div>
+      <div className="relative mx-auto max-w-6xl px-6 pt-24 pb-16 sm:pt-32 sm:pb-24">
+        {/* Logo + «Thank you, Wil.» */}
+        <div className="flex flex-col items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 backdrop-blur px-4 py-2 text-[11px] tracking-[0.25em] text-white/80"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ff6a1a] pulse-dot" />
+            WIL SG — 19.09.2026
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
-          className="mt-8 sm:mt-10"
-        >
-          <Image
-            src="/dystopia-logo-full.png"
-            alt="DYSTOPIA — Drum & Bass Event, Stadtsaal Wil (SG), Ostschweiz"
-            width={1400}
-            height={454}
-            className="w-full max-w-[640px] sm:max-w-[760px] h-auto drop-shadow-[0_0_40px_rgba(205,73,3,0.35)]"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+            className="mt-6 sm:mt-8"
+          >
+            <Image
+              src="/dystopia-logo-full.png"
+              alt="DYSTOPIA — Drum & Bass Event, Stadtsaal Wil (SG), Ostschweiz"
+              width={1400}
+              height={454}
+              className="w-full max-w-[300px] sm:max-w-[520px] h-auto drop-shadow-[0_0_40px_rgba(205,73,3,0.35)]"
+            />
+          </motion.div>
+
+          <motion.div
+            className="mt-5 h-px w-full max-w-md hairline-orange"
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.9, ease: "easeOut" }}
           />
-        </motion.div>
 
-        <motion.div
-          className="mt-6 h-px w-full max-w-2xl hairline-orange"
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.9, ease: "easeOut" }}
-          style={{ transformOrigin: "left" }}
-        />
+          <motion.h1
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.7, ease: "easeOut" }}
+            className="mt-5 text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight"
+            style={{
+              textShadow:
+                "0 0 14px rgba(0,0,0,0.85), 0 0 36px rgba(0,0,0,0.7), 0 0 70px rgba(0,0,0,0.5)",
+            }}
+          >
+            Thank you, <span className="text-[#ff6a1a]">Wil.</span>
+            {/* SEO-/Screenreader-Ergänzung — visuell unsichtbar, semantisch tragend */}
+            <span className="sr-only">
+              {" "}
+              — Aftermovie und Recap von DYSTOPIA, dem Drum &amp; Bass Event
+              vom 19. September 2026 im Stadtsaal Wil (SG), Ostschweiz
+            </span>
+          </motion.h1>
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.7, ease: "easeOut" }}
-          className="mt-6 max-w-2xl text-base sm:text-lg text-white/80 leading-relaxed"
-        >
-          Dystopia ist die neue Drum &amp; Bass Experience in der Ostschweiz.
-          Premiere am 19. September 2026 im Stadtsaal Wil — mit drei
-          internationalen Headlinern, drei weiteren Acts und einer Bühne, die
-          ihr so noch nicht erlebt habt.
-        </motion.p>
-
+        {/* Aftermovie-Karte: Titel + Kurztext, darunter (Desktop: daneben) der Player */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.7, ease: "easeOut" }}
-          className="mt-8 flex flex-wrap gap-2"
+          className="relative mx-auto mt-10 grid max-w-4xl gap-6 overflow-hidden rounded-2xl border border-white/10 bg-black/50 p-5 backdrop-blur sm:p-8 lg:grid-cols-[320px_1fr] lg:gap-x-10"
         >
-          <HeroPill highlight>{dateText}</HeroPill>
-          <HeroPill>{venueText}</HeroPill>
-          <HeroPill>Drum &amp; Bass — volles Spektrum</HeroPill>
-          <HeroPill>LED · Laser · Strobes</HeroPill>
-        </motion.div>
+          <div className="absolute -top-20 -right-20 h-60 w-60 rounded-full bg-[#cd4903]/10 blur-3xl" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.7, ease: "easeOut" }}
-          className="mt-10 flex flex-wrap items-center gap-3"
-        >
-          <a
-            href={primaryCta.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-umami-event="Tickets Click"
-            data-umami-event-source="hero"
-            className="group relative overflow-hidden rounded-2xl bg-[#cd4903] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_30px_rgba(205,73,3,0.35)] hover:shadow-[0_0_45px_rgba(205,73,3,0.55)] transition"
-          >
-            <span className="relative z-10 tracking-wider">{primaryCta.label}</span>
-            <span
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(255,106,26,0.95), rgba(205,73,3,0.95))",
-              }}
-            />
-          </a>
+          <div className="relative lg:col-start-2 lg:self-end">
+            <div className="flex items-center gap-3">
+              <span className="h-2 w-2 rounded-full bg-[#cd4903] pulse-dot" />
+              <p className="text-[11px] tracking-[0.3em] text-white/55">
+                AFTERMOVIE
+              </p>
+            </div>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-black tracking-tight">
+              DYSTOPIA 2026 — Aftermovie
+            </h2>
+            <p className="mt-3 max-w-md text-sm sm:text-base text-white/75 leading-relaxed">
+              Der Rückblick auf die erste Ausgabe von DYSTOPIA.
+            </p>
+          </div>
 
-          <a
-            href={secondaryCta.href}
-            className="rounded-2xl border border-white/25 bg-white/5 backdrop-blur px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
-          >
-            {secondaryCta.label}
-          </a>
+          <div className="relative lg:col-start-1 lg:row-span-2 lg:row-start-1">
+            <AftermoviePlayer />
+          </div>
 
-          <a
-            href="#faq"
-            className="rounded-2xl border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/80 hover:text-white hover:border-white/25 transition"
-          >
-            Infos / FAQ
-          </a>
+          <div className="relative lg:col-start-2 lg:self-start">
+            <div className="flex flex-wrap gap-2">
+              <HeroPill highlight>Samstag, 19. September 2026</HeroPill>
+              <HeroPill>Stadtsaal Wil</HeroPill>
+              <HeroPill>Sechs Acts · eine Nacht</HeroPill>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href="#gallery"
+                className="rounded-2xl border border-white/25 bg-white/5 backdrop-blur px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
+              >
+                Zur Gallery
+              </a>
+
+              <a
+                href="#dystopia-2027"
+                className="rounded-2xl border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/80 hover:text-white hover:border-white/25 transition"
+              >
+                DYSTOPIA 2027
+              </a>
+            </div>
+          </div>
         </motion.div>
 
         <div className="mt-12 overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur">
           <Ticker
             text={[
+              "THANK YOU, WIL",
               "ARCANDO · FOX STEVENSON · TANTRON",
               "NPSTR · GINGERBELL · LUiFF",
-              "DYSTOPIAN VISUAL EXPERIENCE",
-              "WIL · SCHWEIZ · 19.09.2026",
+              "SEE U NEXT YEAR · DYSTOPIA 2027",
             ].join("  •  ")}
           />
         </div>
 
         <motion.a
-          href="#lineup"
+          href="#recap"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.6 }}
