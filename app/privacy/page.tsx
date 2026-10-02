@@ -100,6 +100,30 @@ export default function PrivacyPage() {
         Kontaktdaten, Inhalt der Anfrage) zur Bearbeitung Ihres Anliegens.
       </p>
 
+      <h3>4.4 Aftermovie und Bildergalerie</h3>
+      <p>
+        Das Aftermovie und die Bilder der Gallery liegen auf dem Server unseres
+        Hosting-Anbieters und werden direkt von dort ausgeliefert. Es sind
+        keine Video- oder Bilddienste Dritter (z.B. YouTube oder Vimeo)
+        eingebunden. Beim Abspielen des Videos oder beim Öffnen eines Bildes
+        fallen deshalb ausschliesslich die unter 4.1 beschriebenen
+        Server-Logfiles an; es werden keine Daten an Dritte übermittelt.
+      </p>
+
+      <h3>4.5 Links zu unseren Social-Media-Profilen</h3>
+      <p>
+        Unsere Website enthält Links zu unseren Profilen auf{" "}
+        <strong>Instagram</strong> und <strong>Facebook</strong> (Anbieterin
+        jeweils: Meta Platforms Ireland Ltd.) sowie auf{" "}
+        <strong>TikTok</strong> (Anbieterin: TikTok Technology Ltd.). Es
+        handelt sich um reine Verlinkungen — Social-Media-Plugins oder
+        eingebettete Inhalte dieser Plattformen setzen wir nicht ein. Daten
+        werden erst an die jeweilige Plattform übertragen, wenn Sie einen
+        dieser Links anklicken und damit unsere Website verlassen. Ab diesem
+        Zeitpunkt gelten die Datenschutzbestimmungen der jeweiligen
+        Anbieterin.
+      </p>
+
       <h2>5. Zwecke der Bearbeitung</h2>
       <p>
         Wir bearbeiten Personendaten zu folgenden Zwecken: Abwicklung des
@@ -174,7 +198,8 @@ export default function PrivacyPage() {
         IP-Adressen im Klartext und legt keine Profile einzelner Besuchender
         an. Erfasst werden ausschliesslich aggregierte Informationen wie
         Seitenaufrufe, Referrer, Browser- und Geräteklasse sowie Klicks auf
-        zentrale Buttons (z.B. Ticket-Link, Instagram-Link). Eine
+        zentrale Buttons (Links zu Instagram, Facebook und TikTok, Start des
+        Aftermovies, «Mehr anzeigen» in der Gallery). Eine
         Identifizierung einzelner Personen ist mit diesen Daten nicht möglich.
         Rechtsgrundlage ist unser berechtigtes Interesse an einer
         datenschutzfreundlichen Reichweitenmessung (Art. 6 Abs. 1 lit. f

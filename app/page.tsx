@@ -73,7 +73,7 @@ const VIDEO_JSONLD = {
   description:
     "Das Aftermovie von DYSTOPIA, dem Drum & Bass Event vom 19. September 2026 im Stadtsaal Wil (SG) — mit Arcando, Fox Stevenson, Tantron, NPSTR, Gingerbell und LUiFF.",
   thumbnailUrl: ["https://dystopia-dnb.ch/video/aftermovie-2026-poster.jpg"],
-  uploadDate: "2026-10-01T12:00:00+02:00",
+  uploadDate: "2026-10-02T12:00:00+02:00",
   duration: "PT36S",
   contentUrl: "https://dystopia-dnb.ch/video/aftermovie-2026.mp4",
   inLanguage: "de-CH",

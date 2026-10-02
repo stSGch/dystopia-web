@@ -99,8 +99,9 @@ export default function ImprintPage() {
           rel="noopener noreferrer"
         >
           dystopia.shop.bookinea.app
-        </a>
-        ) liegen ausserhalb unseres Verantwortungsbereichs. Es wird jegliche
+        </a>{" "}
+        sowie unsere Profile auf Instagram, Facebook und TikTok) liegen
+        ausserhalb unseres Verantwortungsbereichs. Es wird jegliche
         Verantwortung für solche Websites abgelehnt. Der Zugriff und die
         Nutzung solcher Websites erfolgen auf eigene Gefahr.
       </p>
